@@ -15,8 +15,9 @@ class AvailabilityService:
 
     @staticmethod
     def check_and_reset_availabilities(db: Session):
-        AvailabilityService.delete_weekly_availabilities(db)
-        AvailabilityService.create_weekly_availabilities(db)
+        pass
+        # AvailabilityService.delete_weekly_availabilities(db)
+        # AvailabilityService.create_weekly_availabilities(db)
     
     @staticmethod
     def create_availability(availability: AvailabilitySchema, db: Session):

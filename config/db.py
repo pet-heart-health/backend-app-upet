@@ -3,10 +3,10 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 
-MYSQL_USER = 'avnadmin'
-MYSQL_PASSWORD = 'AVNS_9JcqR4viB2lIWgYPXxf'
-MYSQL_HOST = 'upet-enzotrujilloacosta-13ef.i.aivencloud.com'
-MYSQL_PORT = '20311'
+MYSQL_USER = 'root'
+MYSQL_PASSWORD = 'root'
+MYSQL_HOST = 'localhost'
+MYSQL_PORT = '3306'
 MYSQL_DATABASE = 'defaultdb'
 
 #mysqlsh --sql --host=sfo1.clusters.zeabur.com --port=30777 --user=root --password=Y9UEFrxH14OgZ872K6TueyJjD53mts0Q --schema=zeabur

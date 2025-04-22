@@ -81,4 +81,9 @@ class PetServices:
         db.commit()
         return pet
        
-       
+    @staticmethod
+    def get_petowners(db: Session):
+        pet = db.query(Pet)
+        if not pet:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Pets not found")
+        return pet
