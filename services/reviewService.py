@@ -29,6 +29,15 @@ class ReviewService:
         return [ReviewSchemaGet.from_orm(review) for review in reviews]
     
     @staticmethod
+    def get_all_reviews_by_vetId(vet_id:int,db: Session) -> list[ReviewSchemaGet]:
+        reviews = (
+            db.query(Review)
+            .options(joinedload(Review.petowner).joinedload(PetOwner.user))
+            .filter(Review.veterinarian_id == vet_id).all()
+        )
+        return [ReviewSchemaGet.from_orm(review) for review in reviews]
+    
+    @staticmethod
     def get_reviews_by_veterinarian_id(vet_id: int, db: Session) -> list[ReviewSchemaGet]:
             reviews = (
                 db.query(Review)
