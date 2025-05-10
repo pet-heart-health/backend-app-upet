@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 
 MYSQL_USER = 'root'
-MYSQL_PASSWORD = 'root'
+MYSQL_PASSWORD = 'password'
 MYSQL_HOST = 'localhost'
 MYSQL_PORT = '3306'
 MYSQL_DATABASE = 'defaultdb'
