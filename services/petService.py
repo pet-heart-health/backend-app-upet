@@ -15,7 +15,7 @@ from services.medical_history import MedicalHistoryService
 class PetServices:
     @staticmethod
     def create_new_pet(petowner_id: int, pet: PetSchemaPost, db: Session ):
-        pet_owner = db.query(PetOwner).filter(PetOwner.id == petowner_id).first()
+        pet_owner = db.query(PetOwner).filter(PetOwner.userId == petowner_id).first()
         if not pet_owner:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="El propietario de la mascota no existe.")
 
