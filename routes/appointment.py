@@ -67,6 +67,6 @@ def get_cancelled_appointments_by_veterinarian_id(veterinarian_id: int, db: Sess
 def update_appointment(appointment_id: int, appointment: AppointmentSchemaUpdate, db: Session = Depends(get_db)):
     return AppointmentService.post_appointment(appointment_id, appointment, db)
 
-@appointments.put(endpoint + "/{appointment_id}", response_model=AppointmentSchemaGet, status_code=status.HTTP_200_OK, tags=[tag])
+@appointments.put(endpoint + "/{appointment_id}/cancel", response_model=AppointmentSchemaGet, status_code=status.HTTP_200_OK, tags=[tag])
 def cancel_appointment(appointment_id: int, appointment: AppointmentSchemaUpdate, db: Session = Depends(get_db)):
     return AppointmentService.cancel_appointment(appointment_id, appointment, db)
