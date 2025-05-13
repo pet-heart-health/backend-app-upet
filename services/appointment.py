@@ -153,14 +153,14 @@ class AppointmentService:
 
     @staticmethod
     def cancel_appointment( appointment_id: int, result: AppointmentSchemaUpdate, db: Session):
-            appointment = db.query(Appointment).filter(Appointment.id == appointment_id).first()
-            if not appointment:
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="La cita no existe.")
+        appointment = db.query(Appointment).filter(Appointment.id == appointment_id).first()
+        if not appointment:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="La cita no existe.")
 
-            appointment.diagnosis = result.diagnosis
-            appointment.treatment = result.treatment
+        appointment.diagnosis = result.diagnosis
+        appointment.treatment = result.treatment
 
-            appointment.status = StatusAppointmentEnum.cancelled
-            db.commit()
-            db.refresh(appointment)
-            return appointment
+        appointment.status = StatusAppointmentEnum.cancelled
+        db.commit()
+        db.refresh(appointment)
+        return appointment
