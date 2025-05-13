@@ -47,6 +47,10 @@ def get_upcoming_appointments_by_owner_id(owner_id: int, db: Session = Depends(g
 def get_past_appointments_by_owner_id(owner_id: int, db: Session = Depends(get_db)):
     return AppointmentService.get_completed_appointments_by_owner_id(owner_id, db)
 
+@appointments.get(endpoint + "/owner/{owner_id}/cancelled", response_model=list[AppointmentSchemaGet], status_code=status.HTTP_200_OK, tags=[tag])
+def get_cancelled_appointments_by_owner_id(owner_id: int, db: Session = Depends(get_db)):
+    return AppointmentService.get_cancelled_appointments_by_owner_id(owner_id, db)
+
 @appointments.get(endpoint + "/veterinarian/{veterinarian_id}/upcoming", response_model=list[AppointmentSchemaGet], status_code=status.HTTP_200_OK, tags=[tag])
 def get_upcoming_appointments_by_veterinarian_id(veterinarian_id: int, db: Session = Depends(get_db)):
     return AppointmentService.get_upcoming_appointments_by_veterinarian_id(veterinarian_id, db)
@@ -55,8 +59,14 @@ def get_upcoming_appointments_by_veterinarian_id(veterinarian_id: int, db: Sessi
 def get_past_appointments_by_veterinarian_id(veterinarian_id: int, db: Session = Depends(get_db)):
     return AppointmentService.get_completed_appointments_by_veterinarian_id(veterinarian_id, db)
 
+@appointments.get(endpoint + "/veterinarian/{veterinarian_id}/cancelled", response_model=list[AppointmentSchemaGet], status_code=status.HTTP_200_OK, tags=[tag])
+def get_cancelled_appointments_by_veterinarian_id(veterinarian_id: int, db: Session = Depends(get_db)):
+    return AppointmentService.get_cancelled_appointments_by_veterinarian_id(veterinarian_id, db)
+
 @appointments.put(endpoint + "/{appointment_id}", response_model=AppointmentSchemaGet, status_code=status.HTTP_200_OK, tags=[tag])
 def update_appointment(appointment_id: int, appointment: AppointmentSchemaUpdate, db: Session = Depends(get_db)):
     return AppointmentService.post_appointment(appointment_id, appointment, db)
 
-    
+@appointments.put(endpoint + "/{appointment_id}", response_model=AppointmentSchemaGet, status_code=status.HTTP_200_OK, tags=[tag])
+def cancel_appointment(appointment_id: int, appointment: AppointmentSchemaUpdate, db: Session = Depends(get_db)):
+    return AppointmentService.cancel_appointment(appointment_id, appointment, db)

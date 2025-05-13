@@ -74,8 +74,16 @@ class AppointmentService:
         return AppointmentService.get_appointments_by_entity("owner", owner_id, db, StatusAppointmentEnum.completed)
 
     @staticmethod
+    def get_cancelled_appointments_by_owner_id(owner_id: int, db: Session):
+        return AppointmentService.get_appointments_by_entity("owner", owner_id, db, StatusAppointmentEnum.cancelled)
+
+    @staticmethod
     def get_completed_appointments_by_veterinarian_id(veterinarian_id: int, db: Session):
         return AppointmentService.get_appointments_by_entity("veterinarian", veterinarian_id, db, StatusAppointmentEnum.completed)
+
+    @staticmethod
+    def get_cancelled_appointments_by_veterinarian_id(veterinarian_id: int, db: Session):
+        return AppointmentService.get_appointments_by_entity("veterinarian", veterinarian_id, db, StatusAppointmentEnum.cancelled)
 
     @staticmethod
     def get_upcoming_appointments_by_veterinarian_id(veterinarian_id: int, db: Session):
@@ -142,3 +150,17 @@ class AppointmentService:
         db.commit()
         db.refresh(appointment)
         return appointment
+
+    @staticmethod
+        def cancel_appointment( appointment_id: int, result: AppointmentSchemaUpdate, db: Session):
+            appointment = db.query(Appointment).filter(Appointment.id == appointment_id).first()
+            if not appointment:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="La cita no existe.")
+
+            appointment.diagnosis = result.diagnosis
+            appointment.treatment = result.treatment
+
+            appointment.status = StatusAppointmentEnum.cancelled
+            db.commit()
+            db.refresh(appointment)
+            return appointment
