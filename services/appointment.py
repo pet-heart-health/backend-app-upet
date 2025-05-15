@@ -96,7 +96,7 @@ class AppointmentService:
             pet = db.query(Pet).filter(Pet.petOwnerId == entity_id).first()
             if not pet:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="La mascota no existe.")
-            appointments = db.query(Appointment).filter(Appointment.pet_id == pet.id).filter(Appointment.status == status_enum).all()
+            appointments = db.query(Appointment).filter(Appointment.status == status_enum).all()
             
         if entity == "veterinarian":
             appointments = db.query(Appointment).filter(Appointment.veterinarian_id == entity_id).filter(Appointment.status == status_enum).all()
