@@ -4,6 +4,7 @@ from models.review import Review
 from sqlalchemy.orm import Session
 from models.petOwner import PetOwner
 from schemas.review import ReviewSchemaGet, ReviewSchemaPost
+from services.notification import NotificationService
 from sqlalchemy.orm import joinedload
 
 class ReviewService:

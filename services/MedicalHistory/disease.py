@@ -4,7 +4,6 @@ from models.MedicalHistory.disease import Disease
 from schemas.MedicalHistory.disease import DiseaseSchemaGet, DiseaseSchemaPost
 from validators.schema_validator import SchemaValidator
 from validators.medical_history_validator import MedicalHistoryValidator
-
 class DiseaseService:
 
     @staticmethod
@@ -17,6 +16,7 @@ class DiseaseService:
         db.add(new_disease)
         db.commit()
         db.refresh(new_disease)
+
         return DiseaseSchemaGet.from_orm(new_disease)
 
     @staticmethod
