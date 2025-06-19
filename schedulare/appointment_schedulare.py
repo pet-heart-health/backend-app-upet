@@ -6,6 +6,8 @@ from models.appointment import Appointment
 from models.pet import Pet
 from models.petOwner import PetOwner
 from models.veterinarian import Veterinarian
+from Enums.notificationTargetTypeEnum import NotificationTargetType
+from Enums.notificationTypeEnum import NotificationType
 from services.notification import NotificationService
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
@@ -82,7 +84,7 @@ class AppointmentScheduler:
         Envía una notificación al dueño de la mascota y al veterinario.
         """
         try:
-            notification_service = NotificationService(self.db)
+            
             
             pet = self.db.query(Pet).filter(Pet.id == appointment.pet_id).first()
             
@@ -103,28 +105,12 @@ class AppointmentScheduler:
                 print(f"Error: No se encontró al dueño de la mascota para la cita.")
                 return
 
-            # Enviar notificación al dueño de la mascota
-            message_owner = f"¡Tu cita con el veterinario está a punto de comenzar! Faltan 30 minutos."
-            notification_service.create_notification(
-                target_type="PetOwner",
-                target_id=pet_owner.id,
-                message=message_owner
+            NotificationService.create_notification_for_appointment_reminder(
+                db=self.db,
+                appointment=appointment,
+                pet_owner=pet_owner,
+                veterinarian=veterinarian,
             )
-            print(f"Notificación enviada al dueño de la mascota.")
-
-            # Enviar notificación al veterinario
-            veterinarian = self.db.query(Veterinarian).filter(Veterinarian.id == appointment.veterinarian_id).first()
-            if not veterinarian:
-                print(f"Error: No se encontró al veterinario para la cita.")
-                return
-
-            message_veterinarian = f"¡Tu cita con la mascota de {pet.name} está a punto de comenzar! Faltan 30 minutos."
-            notification_service.create_notification(
-                target_type="Veterinarian",
-                target_id=appointment.veterinarian_id,
-                message=message_veterinarian
-            )
-            print(f"Notificación enviada al veterinario.")
         
         except Exception as e:
             print(f"Error al enviar notificaciones: {e}")

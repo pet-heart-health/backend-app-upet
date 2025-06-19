@@ -19,6 +19,6 @@ def create_review(petowner_id: int, review: ReviewSchemaPost, db = Depends(get_d
 def get_reviews(db = Depends(get_db)):
     return ReviewService.get_all_reviews(db)
 
-@reviews.get(endpoint + "/vet/{vet_id}",response_model=list[ReviewSchemaGet], status_code=status.HTTP_200_OK, tags=[tag])
-def get_reviews_by_veterinarian_id(vet_id:int, db = Depends(get_db)):
+@reviews.get(endpoint + "/{vet_id}",response_model=list[ReviewSchemaGet], status_code=status.HTTP_200_OK, tags=[tag])
+def get_review_by_vet_id(vet_id:int, db = Depends(get_db)):
     return ReviewService.get_all_reviews_by_vetId(vet_id,db)

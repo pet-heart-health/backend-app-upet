@@ -13,6 +13,7 @@ from models.pet import Pet
 from models.petOwner import PetOwner
 from models.veterinarian import Veterinarian
 from schemas.appointment import AppointmentSchemaGet, AppointmentSchemaCreate, AppointmentSchemaUpdate
+from services.notification import NotificationService
 
 class AppointmentService:
 
@@ -135,6 +136,12 @@ class AppointmentService:
         db.add(new_appointment)
         db.commit()
         db.refresh(new_appointment)
+        NotificationService.create_notification_for_new_appointment(
+            db=db,
+            appointment=new_appointment,
+            pet_owner= db.query(PetOwner).filter(PetOwner.id == pet.petOwnerId).first(),
+            veterinarian=veterinarian
+        )
         return new_appointment
     
     @staticmethod
@@ -149,6 +156,12 @@ class AppointmentService:
         appointment.status = StatusAppointmentEnum.completed
         db.commit()
         db.refresh(appointment)
+        NotificationService.create_notification_for_cancelled_appointment(
+            db=db,
+            appointment=appointment,
+            pet_owner=db.query(PetOwner).filter(PetOwner.id == appointment.pet.petOwnerId).first(),
+            veterinarian=db.query(Veterinarian).filter(Veterinarian.id == appointment.veterinarian_id).first()
+        )
         return appointment
 
     @staticmethod
@@ -163,4 +176,10 @@ class AppointmentService:
         appointment.status = StatusAppointmentEnum.cancelled
         db.commit()
         db.refresh(appointment)
+        NotificationService.create_notification_for_appointment_completion(
+            db=db,
+            appointment=appointment,
+            pet_owner=db.query(PetOwner).filter(PetOwner.id == appointment.pet.petOwnerId).first(),
+            veterinarian=db.query(Veterinarian).filter(Veterinarian.id == appointment.veterinarian_id).first()
+        )
         return appointment

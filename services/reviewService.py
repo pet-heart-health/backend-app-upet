@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 from models.review import Review
-
+from services.notification import NotificationService
 from sqlalchemy.orm import Session
 from models.petOwner import PetOwner
 from schemas.review import ReviewSchemaGet, ReviewSchemaPost
@@ -36,6 +36,7 @@ class ReviewService:
             .filter(Review.veterinarian_id == vet_id).all()
         )
         return [ReviewSchemaGet.from_orm(review) for review in reviews]
+    
     
     @staticmethod
     def get_reviews_by_veterinarian_id(vet_id: int, db: Session) -> list[ReviewSchemaGet]:

@@ -16,8 +16,8 @@ def get_notifications_by_pet_owner(pet_owner_id: int, db: Session = Depends(get_
     """
     Obtener todas las notificaciones para un PetOwner específico.
     """
-    notification_service = NotificationService(db)
-    notifications = notification_service.get_notifications_by_pet_owner(pet_owner_id)
+    notification_service = NotificationService()
+    notifications = notification_service.get_notifications_by_pet_owner(db,pet_owner_id)
     if not notifications:
         raise HTTPException(status_code=404, detail="No notifications found for the given PetOwner.")
     return notifications
@@ -27,8 +27,8 @@ def get_notifications_by_veterinarian(veterinarian_id: int, db: Session = Depend
     """
     Obtener todas las notificaciones para un Veterinarian específico.
     """
-    notification_service = NotificationService(db)
-    notifications = notification_service.get_notifications_by_veterinarian(veterinarian_id)
+    notification_service = NotificationService()
+    notifications = notification_service.get_notifications_by_veterinarian(db,veterinarian_id)
     if not notifications:
         raise HTTPException(status_code=404, detail="No notifications found for the given Veterinarian.")
     return notifications
@@ -38,6 +38,6 @@ def get_all_notifications(db: Session = Depends(get_db)):
     """
     Obtener todas las notificaciones en la base de datos.
     """
-    notification_service = NotificationService(db)
-    notifications = notification_service.get_all_notifications()
+    notification_service = NotificationService()
+    notifications = notification_service.get_all_notifications(db)
     return notifications
