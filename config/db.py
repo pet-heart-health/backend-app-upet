@@ -11,8 +11,8 @@ MYSQL_PORT = '3306'
 MYSQL_DATABASE = 'defaultdb'
 
 #mysqlsh --sql --host=sfo1.clusters.zeabur.com --port=30777 --user=root --password=Y9UEFrxH14OgZ872K6TueyJjD53mts0Q --schema=zeabur
-URL_DATABASE = f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}'
-#URL_DATABASE = os.getenv('URL_DATABASE', "mysql+pymysql://root:AdZLWyqhVAchoUSCRRdtJrrocuzbMdVh@crossover.proxy.rlwy.net:56860/railway")
+#URL_DATABASE = f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}'
+URL_DATABASE = os.getenv('URL_DATABASE', "mysql+pymysql://root:AdZLWyqhVAchoUSCRRdtJrrocuzbMdVh@crossover.proxy.rlwy.net:56860/railway")
 
 engine = create_engine(URL_DATABASE)
 
