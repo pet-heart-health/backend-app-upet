@@ -9,7 +9,7 @@ class PetOwner(Base):
     id = Column(Integer, primary_key=True, index=True)
     userId = Column(Integer, ForeignKey('users.id'))
     numberPhone = Column(String(10))
-    location = Column(String(50))
+    location = Column(String(150))
     subscriptionType = Column(Enum(SubscriptionType, name='subscription_type'), default=SubscriptionType.Basic)
 
     user = relationship("User", back_populates="pet_owner") 
