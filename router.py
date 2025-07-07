@@ -14,6 +14,7 @@ from routes.review import reviews as review_router
 from routes.availability import availabilities as availability_router
 from auth.routes.auth import auth as auth_router
 from routes.pdfReport import pdf_router as pdf_router
+from routes.favorite_clinics import favorite_clinics as favorite_clinics_router
 from config.routes import prefix
 from SmartCollar.Application.routes.smart_collar_route import smart_collar
 routes = APIRouter()
@@ -33,3 +34,4 @@ routes.include_router(vaccine_router,  prefix= prefix)
 routes.include_router(review_router,  prefix= prefix)
 routes.include_router(availability_router,  prefix= prefix)
 routes.include_router(pdf_router, prefix= prefix, tags=["PDF Reports"])
+routes.include_router(favorite_clinics_router, prefix= prefix)

@@ -16,4 +16,5 @@ class VeterinaryClinic(Base):
     image_url = Column(String(255),default="https://previews.123rf.com/images/sonulkaster/sonulkaster1707/sonulkaster170700464/82258505-hospital-de-medicina-veterinaria-clínica-o-tienda-de-animales-para-animales-.jpg")
 
     veterinarians = relationship('Veterinarian', back_populates='clinic')
+    favorite_clinics = relationship("FavoriteClinic", back_populates="clinic")
 
