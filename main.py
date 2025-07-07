@@ -18,6 +18,7 @@ from contextlib import asynccontextmanager
 from scheduler import check_and_reset_availabilities
 
 from router import routes 
+from scheduler_instance import scheduler
 
 try:
     create_all_tables()
@@ -29,7 +30,6 @@ except Exception as e:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Iniciar el scheduler para las notificaciones de citas
-    scheduler = BackgroundScheduler()
     scheduler.start()
 
     appointment_scheduler = AppointmentScheduler(SessionLocal())

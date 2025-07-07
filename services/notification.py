@@ -1,5 +1,6 @@
 from typing import List
 import pytz
+from config.db import SessionLocal
 from models.notification import Notification
 from datetime import datetime as dt
 from sqlalchemy.orm import Session
@@ -10,6 +11,7 @@ from Enums.notificationTargetTypeEnum import NotificationTargetType
 from sqlalchemy.orm.exc import NoResultFound
 from models.appointment import Appointment
 from models.pet import Pet
+from models.reminder import Reminder
 from models.MedicalHistory.disease import Disease
 from models.MedicalHistory.vaccine import Vaccine
 from models.MedicalHistory.surgery import Surgery
@@ -367,4 +369,37 @@ class NotificationService:
         notifications = db.query(Notification).all()
         return notifications
     
-      
+    
+    @staticmethod
+    def send_reminder_notification(reminder_id: int):
+        """
+        Enviar una notificación de recordatorio usando el ID.
+        """
+        print("Ejecutando send_reminder_notification con ID:", reminder_id)
+        db = SessionLocal()
+        try:
+            reminder = db.query(Reminder).get(reminder_id)
+            if not reminder:
+                print(f"No se encontró reminder con id {reminder_id}")
+                return
+
+            pet_owner = db.query(PetOwner).filter(PetOwner.id == reminder.userId).first()
+            if not pet_owner:
+                print(f"PetOwner con id {reminder.userId} no existe")
+                return
+
+            message = f"{reminder.description}"
+            title = f"Recordatorio: {reminder.title}"
+
+            NotificationService.create_notification(
+                db=db,
+                target_type=NotificationTargetType.petOwner,
+                target_id=pet_owner.id,
+                message=message,
+                title=title,
+                notification_type=NotificationType.REMINDER
+            )
+        except Exception as e:
+            print(f"Error sending reminder notification: {e}")
+        finally:
+            db.close()

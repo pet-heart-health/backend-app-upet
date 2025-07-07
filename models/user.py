@@ -19,6 +19,7 @@ class User(Base):
     pet_owner = relationship("PetOwner", back_populates="user")
     veterinarian = relationship("Veterinarian", back_populates="user")
     favorite_clinics = relationship("FavoriteClinic", back_populates="user")
+    reminders = relationship("Reminder", back_populates="user")
 
 
 

@@ -11,6 +11,7 @@ from Enums.notificationTypeEnum import NotificationType
 from services.notification import NotificationService
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
+from apscheduler.triggers.date import DateTrigger
 
 class AppointmentScheduler:
 
@@ -76,7 +77,6 @@ class AppointmentScheduler:
                 print("No se encontraron citas.")
         except Exception as e:
             print(f"Error al revisar las citas: {e}")
-
 
 
     def send_notification(self, appointment: Appointment):
