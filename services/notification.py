@@ -366,3 +366,5 @@ class NotificationService:
         """
         notifications = db.query(Notification).all()
         return notifications
+    
+      
