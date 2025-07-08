@@ -18,6 +18,7 @@ class ReminderService:
 
         # Asegurar que la hora del reminder tenga zona horaria de Lima
         lima_tz = pytz.timezone('America/Lima')
+        utc_tz = pytz.timezone('UTC')
         if new_reminder.date_time.tzinfo is None:
             new_reminder.date_time = lima_tz.localize(new_reminder.date_time)
         else:
