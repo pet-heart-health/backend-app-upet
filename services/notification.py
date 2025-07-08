@@ -383,7 +383,7 @@ class NotificationService:
                 print(f"No se encontró reminder con id {reminder_id}")
                 return
 
-            pet_owner = db.query(PetOwner).filter(PetOwner.id == reminder.userId).first()
+            pet_owner = db.query(PetOwner).filter(PetOwner.userId == reminder.userId).first()
             if not pet_owner:
                 print(f"PetOwner con id {reminder.userId} no existe")
                 return
