@@ -32,7 +32,7 @@ class ReminderService:
         scheduler.add_job(
             NotificationService.send_reminder_notification,
             args=[new_reminder.id],
-            trigger=DateTrigger(run_date=new_reminder.date_time)
+            trigger=DateTrigger(run_date=new_reminder.date_time.astimezone(utc_tz))
 )
 
         return new_reminder
