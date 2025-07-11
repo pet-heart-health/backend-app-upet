@@ -1,3 +1,5 @@
 from apscheduler.schedulers.background import BackgroundScheduler
+import pytz
 
-scheduler = BackgroundScheduler()
+lima_tz = pytz.timezone('America/Lima')
+scheduler = BackgroundScheduler(timezone=lima_tz)

@@ -18,7 +18,7 @@ class ReminderService:
 
         # Asegurar que la hora del reminder tenga zona horaria de Lima
         lima_tz = pytz.timezone('America/Lima')
-        utc_tz = pytz.timezone('UTC')
+        current_datetime = datetime.now(lima_tz)
         
         if new_reminder.date_time.tzinfo is None:
             new_reminder.date_time = lima_tz.localize(new_reminder.date_time)
@@ -30,13 +30,15 @@ class ReminderService:
         db.commit()
         db.refresh(new_reminder)
 
-        utc_dt = new_reminder.date_time.astimezone(utc_tz)
+        
+        # Convertir la hora del reminder a hora local del servidor
+
         
         # Programar el recordatorio usando la hora correcta de Lima
         scheduler.add_job(
             NotificationService.send_reminder_notification,
             args=[new_reminder.id],
-            trigger=DateTrigger(run_date=utc_dt)
+            trigger=DateTrigger(run_date=new_reminder.date_time)
             )
 
         return new_reminder
