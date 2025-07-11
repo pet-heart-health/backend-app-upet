@@ -33,7 +33,7 @@ class ReminderService:
         
         # Convertir la hora del reminder a hora local del servidor
 
-        
+        print(f"Recordatorio creado: {new_reminder.id} para {new_reminder.date_time}")
         # Programar el recordatorio usando la hora correcta de Lima
         scheduler.add_job(
             NotificationService.send_reminder_notification,
